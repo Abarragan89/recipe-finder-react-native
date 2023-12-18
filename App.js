@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#3d0c0c'
   },
   appContainer: {
     marginTop: Platform.OS === 'android' ? 50 : 10

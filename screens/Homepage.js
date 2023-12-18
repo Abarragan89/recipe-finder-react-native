@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     categoriesContainer: {
         flex: 1,
         flexDirection: 'row',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        justifyContent: 'center'
     }
-    
+
 })
