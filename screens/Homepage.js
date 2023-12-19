@@ -2,8 +2,15 @@ import { View, ScrollView, StyleSheet } from "react-native"
 import CategorySquare from "../components/CategorySquare";
 import { CATEGORIES } from "../data/dummy-data";
 
+// navigaiton prop comes from react navigation since this screen is registered
+function HomePage({ navigation }) {
 
-function HomePage() {
+    function categoryPressHandler(categoryId) {
+      navigation.navigate('MealsOverview', {
+        categoryId,
+      })
+    }
+
     return (
         <ScrollView>
           <View style={styles.categoriesContainer}>
@@ -11,6 +18,7 @@ function HomePage() {
               <CategorySquare
                 key={category.id}
                 color={category.color}
+                onPress={categoryPressHandler.bind(this, category.id)}
               >
                 {category.title}
               </CategorySquare>

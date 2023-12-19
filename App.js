@@ -1,24 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, SafeAreaView, Platform } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import HomePage from './screens/Homepage';
+import MealsOverview from './screens/MealsOverview';
+
+//object with two properties
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.background}>
-      <View style={styles.appContainer}>
-        <StatusBar style="light" />
-        <HomePage />
-      </View>
-    </SafeAreaView>
+    <>
+      <StatusBar style="dark" />
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="MealsCategories" component={HomePage} />
+          <Stack.Screen name="MealsOverview" component={MealsOverview} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  appContainer: {
-    marginTop: Platform.OS === 'android' ? 50 : 10
-  }
-});

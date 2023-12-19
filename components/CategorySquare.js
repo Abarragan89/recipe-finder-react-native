@@ -1,11 +1,12 @@
 import { Text, View, StyleSheet, Pressable, Platform } from "react-native";
 
-function CategorySquare({ children, color }) {
+function CategorySquare({ children, color, onPress }) {
     return (
         <View style={[styles.categoryContainer]}>
             <Pressable
                 android_ripple={{ color: '#ffffff82' }}
                 style={({ pressed }) =>[styles.innerContainer, { backgroundColor: color }, pressed ? styles.pressed : null]}
+                onPress={onPress}
             >
                 <View>
                     <Text style={styles.categoryText}>{children}</Text>
