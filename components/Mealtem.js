@@ -1,15 +1,31 @@
-import { Text, View, Pressable, Image, StyleSheet } from "react-native"
+import { Text, View, Pressable, Image, StyleSheet, Platform } from "react-native"
+import { useNavigation } from "@react-navigation/native";
+import MealsCardDetails from "./MealsCardDetails";
 
-function MealItem({ meal }) {
+function MealItem({ title, imageUrl, affordability, complexity, duration, id }) {
+
+    const navigation = useNavigation();
+
+    function renderDetails(mealId) {
+        navigation.navigate('MealsDetails', {
+            mealId
+        })
+    }
 
     return (
-        <View>
-            <Pressable>
-                <View>
-                    {/* instead of requiring a local file, we set the uri with the url */}
-                    <Image style={styles.image} source={{ uri: meal.imageUrl}} />
-                    <Text style={styles.title}>{meal.title}</Text>
-                </View>
+        <View style={styles.mealItem}>
+            <Pressable
+                android_ripple={{ color: '#ffffff82' }}
+                style={({ pressed }) => pressed ? styles.buttonPressed : null}
+                onPress={renderDetails.bind(this, id)}
+            >
+                <MealsCardDetails
+                    duration={duration}
+                    complexity={complexity}
+                    affordability={affordability}
+                    title={title}
+                    imageUrl={imageUrl}
+                />
             </Pressable>
         </View>
     )
@@ -18,13 +34,12 @@ function MealItem({ meal }) {
 export default MealItem;
 
 const styles = StyleSheet.create({
-    image: {
-        width: '100%',
-        height: 200
+    mealItem: {
+        margin: 16,
+        borderRadius: 8,
+        overflow: 'hidden'
     },
-    title: {
-        fontWeight: 'bold',
-        textAlign: 'center',
-        fontSize: 18
+    buttonPressed: {
+        opacity: 0.5,
     }
 })
