@@ -1,6 +1,5 @@
-import { Text, View, FlatList, StyleSheet } from "react-native";
 import { useLayoutEffect, useState, useEffect } from "react";
-import MealItem from "../components/Mealtem";
+import MealList from "../components/MealList";
 import { MEALS, CATEGORIES } from "../data/dummy-data";
 
 // like navigation, route is another prop given to registered screens via react navigation
@@ -22,43 +21,11 @@ function MealsOverview({ route, navigation }) {
         })
     }, [categoryId, navigation])
 
-
-    //  CallBack function to render each item 
-    function renderMealItem({ item }) {
-        const mealItemOptions = {
-            id: item.id,
-            title: item.title,
-            imageUrl: item.imageUrl,
-            affordability: item.affordability,
-            complexity: item.complexity,
-            duration: item.duration
-        }
-        return (
-            <MealItem {...mealItemOptions} />
-        )
-    }
-
     return (
-        <View style={styles.container}>
-            <FlatList
-                data={mealData}
-                renderItem={renderMealItem}
-                keyExtractor={item => item.id}
-                style={styles.mealList}
-            />
-        </View>
+        <MealList items={mealData} />
     )
+
+
 }
 
 export default MealsOverview;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    mealList: {
-        flex: 1,
-        margin: 16
-      
-    }
-})

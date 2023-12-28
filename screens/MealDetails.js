@@ -1,11 +1,25 @@
-import { Text, View, Image, FlatList, StyleSheet, ScrollView } from "react-native";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { MEALS } from "../data/dummy-data";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect, useContext } from "react";
 import MealsCardDetails from "../components/MealsCardDetails";
+import HeaderIcon from "../components/HeaderIcon";
+// import { FavoritesContext } from "../store/context/favorites-context";
+import { useSelector, useDispatch } from 'react-redux';
+// import the methods to call from the store
+import { addFavorite, removeFavorite } from "../store/redux/favorites";
 
 function MealDetails({ route, navigation }) {
-
     const mealId = route.params.mealId
+    // useSelect hook to grab redux state and dig into difference slices for their data
+    const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids)
+    console.log(favoriteMealIds)
+    // set up dispatch to dispatch actions
+    const dispatch = useDispatch();
+
+    // const favoriteMealsCtx = useContext(FavoritesContext)
+    // we can check the context store to see if it is already favorited
+    const mealIsFavorited = favoriteMealIds.includes(mealId)
+
     const {
         title,
         imageUrl,
@@ -14,10 +28,6 @@ function MealDetails({ route, navigation }) {
         duration,
         affordability,
         complexity,
-        isGlutenFree,
-        isVegan,
-        isVegetarian,
-        isLactoseFree
     } = MEALS.find((meal) => meal.id === mealId)
 
     useEffect(() => {
@@ -25,6 +35,28 @@ function MealDetails({ route, navigation }) {
             title
         })
     }, [title, navigation])
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => 
+            <HeaderIcon 
+                onPress={headerBtnPressHandler}
+                icon={mealIsFavorited ? 'star' : 'star-outline'}
+                size={24}
+                color={'white'}
+            />
+        })
+    }, [navigation, headerBtnPressHandler])
+
+    function headerBtnPressHandler() {
+        if (mealIsFavorited) {
+            // favoriteMealsCtx.removeFavorite(mealId)
+            dispatch(removeFavorite({ mealId }))
+        } else {
+            // favoriteMealsCtx.addFavorite(mealId)
+            dispatch(addFavorite({ mealId }))
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -74,17 +106,20 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16
     },
     directionList: {
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        marginHorizontal: 20,
+        marginBottom: 32
     },
     titleText: {
         fontSize: 24,
-        color: 'white',
+        color: '#da8585',
         textDecorationLine: 'underline',
         marginBottom: 5,
-        textAlign: 'center'
+        textAlign: 'center',
+        letterSpacing: 2
     },
     detailsText: {
         color: 'white',
-        marginBottom: 5,
+        marginBottom: 12,
     }
 })
