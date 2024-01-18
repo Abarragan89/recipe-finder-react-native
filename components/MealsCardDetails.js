@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, Platform } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 
 
 function MealsCardDetails({ duration, complexity, affordability, imageUrl, title }) {

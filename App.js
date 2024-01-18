@@ -43,7 +43,7 @@ function DrawerNavigator() {
       }} />
     </Drawer.Navigator>
   )
-}
+} 
 
 export default function App() {
   return (

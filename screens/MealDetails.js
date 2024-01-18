@@ -12,7 +12,6 @@ function MealDetails({ route, navigation }) {
     const mealId = route.params.mealId
     // useSelect hook to grab redux state and dig into difference slices for their data
     const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids)
-    console.log(favoriteMealIds)
     // set up dispatch to dispatch actions
     const dispatch = useDispatch();
 
